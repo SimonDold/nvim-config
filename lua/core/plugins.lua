@@ -18,30 +18,40 @@ return require('packer').startup(function(use)
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-lualine/lualine.nvim'
   use 'nvim-treesitter/nvim-treesitter'
-  use {
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
-  }
+  use 'nvim-treesitter/playground'
+  use 'mbbill/undotree'
+  -- Version control
+  -- -- Git
+  use 'tpope/vim-fugitive'
+  use 'lewis6991/gitsigns.nvim'
+  -- LSP
   use {
     'nvim-telescope/telescope.nvim',
     tag = '0.1.8',
     requires = { {'nvim-lua/plenary.nvim'} }
   }
 
+  use {
+    'VonHeikemen/lsp-zero.nvim',
+    requires = {{
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
 
-  -- Add nvim-cmp and related sources
-  use 'hrsh7th/nvim-cmp'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'hrsh7th/cmp-buffer'
-  use 'hrsh7th/cmp-path'
-  use 'hrsh7th/cmp-cmdline'
+      -- Add nvim-cmp and related sources
+      'hrsh7th/nvim-cmp',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-nvim-lua',
 
-  -- Snippet engine and snippet sources
-  use 'L3MON4D3/LuaSnip'
-  use 'saadparwaiz1/cmp_luasnip'
-
-
+      -- Snippet engine and snippet sources
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+      'rafamadriz/friendly-snippets',
+    }}
+}
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if packer_bootstrap then

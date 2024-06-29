@@ -1,9 +1,36 @@
-require("mason").setup()
-require("mason-lspconfig").setup({
+local lsp_zero = require('lsp-zero')
+
+  lsp_zero.on_attach(function(client, bufnr)
+    -- see :help lsp-zero-keybindings
+    -- to learn the available actions
+    lsp_zero.default_keymaps({buffer = bufnr})
+  end)
+
+  require("mason").setup()
+  require("mason-lspconfig").setup({
   ensure_installed = {
     "lua_ls",
     "clangd"
   }
+})
+
+
+local cmp = require('cmp')
+local cmp_select = {
+  behavior = cmp.SelectBehavior.Select
+}
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+
+    ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-l>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-Space>'] = cmp.mapping.complete(),
+  })
+})
+
+lsp_zero.set_preferences({
+  sign_icons = { }
 })
 
 local on_attach = function(_, _)
@@ -24,6 +51,11 @@ require("lspconfig").lua_ls.setup {
 
 require("lspconfig").clangd.setup {
   on_attach = on_attach,
+  -- find nearest CMakeLists.txt, 
+  -- create compile_commands.json based on it
+  -- move it compile_commands.json to .
+  -- This ensures that clangd can conncet the .h with the .cc files.
+  os.execute("pwd"),
   os.execute("cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON $(dirname $(find . -name CMakeLists.txt -print -quit))"),
   os.execute("mv $(dirname $(find . -name CMakeLists.txt -print -quit))/compile_commands.json ."),
 }

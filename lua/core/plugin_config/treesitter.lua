@@ -10,7 +10,8 @@ require'nvim-treesitter.configs'.setup {
     -- Install parsers synchonously (only applied to 'ensure_installed')
     sync_install = false,
     auto_install = true,
-    highlight = { 
+    highlight = {
       enable = true,
+      additional_vim_regex_highlighting = false,
     },
   }
