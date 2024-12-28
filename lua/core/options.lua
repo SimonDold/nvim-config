@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 opt.nu = true
-opt.relativenumber = true
+opt.relativenumber = false
 
 -- use spaces for tabs and whatnot
 opt.tabstop = 4
